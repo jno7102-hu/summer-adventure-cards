@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>五日任務單產生器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <aside class="sidebar" aria-label="功能選單">
+      <div class="brand">
+        <span class="brand-mark">5</span>
+        <div>
+          <h1>五日任務單</h1>
+          <p>選主題、排日期、填任務</p>
+        </div>
+        <button id="collapseSidebarBtn" class="icon-button sidebar-collapse-button" type="button" aria-label="收起功能列">‹</button>
+      </div>
+
+      <section class="control-section">
+        <h2>主題選擇</h2>
+        <div class="theme-grid" id="themeGrid">
+          <button class="theme-option active" type="button" data-theme="dino">恐龍冒險</button>
+          <button class="theme-option" type="button" data-theme="ocean">海底尋寶</button>
+          <button class="theme-option" type="button" data-theme="forest">森林動物</button>
+          <button class="theme-option" type="button" data-theme="space">太空任務</button>
+        </div>
+      </section>
+
+      <section class="control-section">
+        <h2>日期選擇</h2>
+        <label class="field-label" for="startDate">第一個日期</label>
+        <input id="startDate" class="text-input" type="date">
+        <div class="date-list" id="dateList" aria-label="可移動日期清單"></div>
+      </section>
+
+      <section class="control-section task-section">
+        <div class="section-title-row">
+          <h2>任務設定</h2>
+          <button id="printBtn" class="icon-button" type="button" title="列印或另存 PDF" aria-label="列印或另存 PDF">⤓</button>
+        </div>
+        <div class="task-editor" id="taskEditor"></div>
+      </section>
+
+      <section class="control-section calibration-section">
+        <label class="switch-label switch-heading">
+          <input id="calibrationToggle" type="checkbox">
+          <span>開啟文字位置校正</span>
+        </label>
+        <div class="calibration-actions">
+          <button id="copyCoordsBtn" class="small-button" type="button" hidden>複製目前座標</button>
+          <button id="savePositionsBtn" class="small-button" type="button">儲存為本機預設</button>
+          <button id="resetPositionsBtn" class="small-button" type="button">恢復預設位置</button>
+        </div>
+        <textarea id="coordOutput" class="coord-output" readonly aria-label="目前主題座標" hidden></textarea>
+      </section>
+
+      <section class="control-section interaction-section">
+        <label class="switch-label switch-heading">
+          <input id="interactiveToggle" type="checkbox">
+          <span>開啟互動模式</span>
+        </label>
+        <label class="switch-label inline-switch">
+          <input id="interactiveCalibrationToggle" type="checkbox">
+          <span>校正勾選與寶箱位置</span>
+        </label>
+        <label class="field-label" for="rewardInput">寶箱獎勵</label>
+        <textarea id="rewardInput" class="reward-input" rows="3">決定周末的旅遊地點</textarea>
+        <div class="calibration-actions">
+          <button id="resetProgressBtn" class="small-button" type="button">清除打勾紀錄</button>
+          <button id="saveInteractionDefaultBtn" class="small-button" type="button">設為互動預設</button>
+          <button id="resetInteractionPositionsBtn" class="small-button" type="button">恢復互動位置</button>
+        </div>
+        <p id="progressStatus" class="progress-status">尚未開始</p>
+      </section>
+    </aside>
+
+    <section class="preview-area" aria-label="任務單預覽">
+      <div class="sheet-tools">
+        <div class="sheet-title-tools">
+          <button id="expandSidebarBtn" class="small-button expand-sidebar-button" type="button" hidden>顯示功能列</button>
+          <p id="themeName">恐龍冒險</p>
+        </div>
+        <button id="downloadBtn" class="primary-button" type="button">下載圖片</button>
+      </div>
+      <div id="sheet" class="sheet theme-dino">
+        <canvas id="sheetCanvas" width="1587" height="2245" aria-label="任務單畫布"></canvas>
+        <div id="overlay" class="overlay" aria-label="位置校正拖曳層"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="rewardModal" class="reward-modal" hidden>
+    <div class="reward-dialog" role="dialog" aria-modal="true" aria-labelledby="rewardTitle">
+      <h2 id="rewardTitle">周末神秘寶箱</h2>
+      <p id="rewardText"></p>
+      <button id="closeRewardBtn" class="primary-button" type="button">太棒了</button>
+    </div>
+  </div>
+
+  <script src="script.js?v=20260612-interactive-state-final"></script>
+</body>
+</html>
